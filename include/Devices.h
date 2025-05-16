@@ -1,0 +1,10 @@
+extern vex::brain Brain;
+extern vex::controller Controller1;
+extern vex::motor leftfrontmotor;
+extern vex::motor rightfrontmotor;
+extern vex::motor rightbackmotor;
+extern vex::motor leftbackmotor;
+extern vex::motor_group LeftDriveSmart;
+extern vex::motor_group RightDriveSmart;
+extern vex::rotation odometry;
+extern vex::inertial inertialsensor;
