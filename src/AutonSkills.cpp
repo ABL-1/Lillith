@@ -52,9 +52,7 @@ void SkillsAuton(){
     if (SkillsPath == 1){  
         
       //Insert the code for the auton skills here
-      Brain.Screen.clearScreen();
-      Brain.Screen.setCursor(2,2);
-      Brain.Screen.print("Skills");
+      
     }
 
     if (SkillsPath == 0){

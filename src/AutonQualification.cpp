@@ -112,36 +112,23 @@ void QualificationAutonLogic() {                // Different aoutonomous paths, 
   if (aoutonpath == 2){
       //this is the code for the right side autonomous red alliance
 
-      Brain.Screen.clearScreen();
-      Brain.Screen.setCursor(2,2);
-      Brain.Screen.print("Qualification Right Side Auton Red");
 
   }
 
     if (aoutonpath == 1){
       //this is the code for the left side autonomous blue alliance
 
-      Brain.Screen.clearScreen();
-      Brain.Screen.setCursor(2,2);
-      Brain.Screen.print("Qualification Left Side Auton Blue");
 
     }
 
   if (aoutonpath == 3){
       //this is the code for the right side autonomous blue alliance
 
-      Brain.Screen.clearScreen();
-      Brain.Screen.setCursor(2,2);
-      Brain.Screen.print("Qualification Right Side Auton Blue");
 
     }
 
     if (aoutonpath == 4){
       //this is the code for the left side autonomous red alliance
-
-      Brain.Screen.clearScreen();
-      Brain.Screen.setCursor(2,2);
-      Brain.Screen.print("Qualification Left Side Auton Red");
 
     }
 

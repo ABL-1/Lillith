@@ -113,9 +113,7 @@ void EliminationAutonLogic() {                // Different aoutonomous paths, th
   if (EliminationPath == 2){
       //this is the code for the right side autonomous red alliance
       //also known as stake side
-      Brain.Screen.clearScreen();
-      Brain.Screen.setCursor(2,2);
-      Brain.Screen.print("Elimination Right Side Auton Red");
+      
       
   }
 
@@ -123,29 +121,17 @@ void EliminationAutonLogic() {                // Different aoutonomous paths, th
       //this is the code for the left side autonomous blue alliance
       //also known as stake side
 
-      Brain.Screen.clearScreen();
-      Brain.Screen.setCursor(2,2);
-      Brain.Screen.print("Elimination Left Side Auton Blue");
-
     }
 
   if (EliminationPath == 3){
       //this is the code for the right side autonomous blue alliance
       //also known as blue ring side
 
-      Brain.Screen.clearScreen();
-      Brain.Screen.setCursor(2,2);
-      Brain.Screen.print("Elimination Right Side Auton Blue");
-
     }
 
     if (EliminationPath == 4){
       //this is the code for the left side autonomous red alliance
       //also known as red ring side
-
-      Brain.Screen.clearScreen();
-      Brain.Screen.setCursor(2,2);
-      Brain.Screen.print("Elimination Left Side Auton Red");
       
     }
 
