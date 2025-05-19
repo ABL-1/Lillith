@@ -6,12 +6,13 @@ using code = vision::code;
 
 brain Brain;
 
-motor leftfrontmotor = motor(PORT18, ratio36_1, true);
+motor leftfrontmotor = motor(PORT20, ratio36_1, false);
 motor leftmiddlemotor = motor(PORT19, ratio36_1, true); 
-motor leftbackmotor = motor(PORT20, ratio36_1, false);   
-motor rightfrontmotor = motor(PORT8, ratio36_1, false);
-motor rigtmiddlemotor = motor(PORT9, ratio36_1, false); 
-motor rightbackmotor = motor(PORT7, ratio36_1, true);
+motor leftbackmotor = motor(PORT18, ratio36_1, true);   
+
+motor rightfrontmotor = motor(PORT11, ratio36_1, true);
+motor rigtmiddlemotor = motor(PORT12, ratio36_1, false); 
+motor rightbackmotor = motor(PORT13, ratio36_1, false);
 rotation odometry = rotation(PORT2, false);
 inertial inertialsensor = inertial(PORT3);
 
