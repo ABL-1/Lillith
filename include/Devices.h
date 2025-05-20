@@ -6,5 +6,7 @@ extern vex::motor rightbackmotor;
 extern vex::motor leftbackmotor;
 extern vex::motor_group LeftDriveSmart;
 extern vex::motor_group RightDriveSmart;
-extern vex::rotation odometry;
 extern vex::inertial inertialsensor;
+extern vex::motor leftintakemotor;
+extern vex::motor rightintakemotor;
+extern vex::motor_group Stage1Intake;

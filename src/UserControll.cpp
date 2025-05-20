@@ -62,6 +62,20 @@ int rc_auto_loop_function_Controller1() {
         RightDriveSmart.spin(vex::forward);
       }
 
+      if (Controller1.ButtonR2.pressing()){
+        Stage1Intake.setVelocity(100, percent);
+        Stage1Intake.spin(forward);
+      }
+
+      if (Controller1.ButtonR1.pressing()){
+        Stage1Intake.setVelocity(100, percent);
+        Stage1Intake.spin(reverse);
+      }
+
+      if (!Controller1.ButtonR2.pressing() && !Controller1.ButtonR1.pressing()){
+        Stage1Intake.stop();
+      }
+
     // wait before repeating the process
     vex::wait(20, vex::msec);
   }

@@ -13,10 +13,14 @@ motor leftbackmotor = motor(PORT18, ratio36_1, true);
 motor rightfrontmotor = motor(PORT11, ratio36_1, true);
 motor rigtmiddlemotor = motor(PORT12, ratio36_1, false); 
 motor rightbackmotor = motor(PORT13, ratio36_1, false);
-rotation odometry = rotation(PORT2, false);
 inertial inertialsensor = inertial(PORT3);
 
 motor_group LeftDriveSmart = motor_group(leftfrontmotor, leftmiddlemotor, leftbackmotor);
 motor_group RightDriveSmart = motor_group(rightfrontmotor, rigtmiddlemotor, rightbackmotor);
+
+motor leftintakemotor = motor(PORT14, ratio18_1, false);
+motor rightintakemotor = motor(PORT17, ratio18_1, true);
+
+motor_group Stage1Intake = motor_group(leftintakemotor, rightintakemotor);
 
 controller Controller1 = controller(primary);
