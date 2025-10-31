@@ -1,6 +1,8 @@
 extern vex::brain Brain;
 extern vex::controller Controller1;
 extern vex::motor leftfrontmotor;
+extern vex::motor leftmiddlemotor;
+extern vex::motor rigtmiddlemotor;
 extern vex::motor rightfrontmotor;
 extern vex::motor rightbackmotor;
 extern vex::motor leftbackmotor;
@@ -10,3 +12,7 @@ extern vex::inertial inertialsensor;
 extern vex::motor leftintakemotor;
 extern vex::motor rightintakemotor;
 extern vex::motor_group Stage1Intake;
+extern vex::motor_group Intake;
+extern vex::motor Intake1;
+extern vex::motor Intake2;
+extern vex::motor Intake3;

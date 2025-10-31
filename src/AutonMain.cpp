@@ -87,11 +87,11 @@ void selection() {                                     //selection code for auto
 }
 
 void startScreen(){
-  wait(1, msec);
+  wait(3, msec);
   singleRun = true;
   setpath = 0;
   Brain.Screen.clearScreen();
-  wait(1, msec);
+  wait(3, msec);
   Brain.Screen.drawRectangle(0, 0, 160, 240, green);
   Brain.Screen.printAt(5, 120, "Qualification");
   Brain.Screen.drawRectangle(160, 0, 160, 240, green);
@@ -99,4 +99,5 @@ void startScreen(){
   Brain.Screen.drawRectangle(320, 0, 160, 240, green);
   Brain.Screen.printAt(325, 120, "Skills");
   Brain.Screen.pressed(selection);
+  return;                                              // Remove this if it accidentially kills the UI
 }

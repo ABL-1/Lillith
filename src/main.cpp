@@ -15,6 +15,7 @@
 #include "AutonMain.h"
 #include "AutonFunction.h"
 #include "AutonElimination.h"
+#include "PID.h"
 
 using namespace vex;
 using signature = vision::signature;
@@ -35,6 +36,7 @@ competition Competition;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
+
 void pre_auton(void) {
 
   // All activities that occur before the competition starts
@@ -42,6 +44,13 @@ void pre_auton(void) {
   vexcodeInit();
 
   startScreen();
+
+  PIDcontroll = false;
+
+  vex::task PID(drivetrainPID);
+
+  LeftDriveSmart.resetPosition();
+  RightDriveSmart.resetPosition();
 
 }
 
@@ -73,13 +82,18 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+
+  PIDcontroll = false;
+
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
-    if(Controller1.ButtonA.pressing() && Controller1.ButtonLeft.pressing() && Controller1.ButtonX.pressing() && Controller1.ButtonUp.pressing() && Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing() && Controller1.ButtonR1.pressing() && Controller1.ButtonR2.pressing()){
+    if(Controller1.ButtonA.pressing() && Controller1.ButtonLeft.pressing() && Controller1.ButtonX.pressing() && Controller1.ButtonUp.pressing()){
       AutonLogic();
     }
+
+    PIDcontroll = false;
 
     rc_auto_loop_function_Controller1();
 

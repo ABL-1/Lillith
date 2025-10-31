@@ -54,7 +54,7 @@ int rc_auto_loop_function_Controller1() {
       // only tell the left drive motor to spin if the values are not in the deadband range
       if (DrivetrainLNeedsToBeStopped_Controller1) {
         LeftDriveSmart.setVelocity(drivetrainLeftSideSpeed, vex::percent);
-        LeftDriveSmart.spin(vex::forward);
+        LeftDriveSmart.spin(vex::forward);                                                           
       }
       // only tell the right drive motor to spin if the values are not in the deadband range
       if (DrivetrainRNeedsToBeStopped_Controller1) {
@@ -62,18 +62,28 @@ int rc_auto_loop_function_Controller1() {
         RightDriveSmart.spin(vex::forward);
       }
 
-      if (Controller1.ButtonR2.pressing()){
-        Stage1Intake.setVelocity(100, percent);
-        Stage1Intake.spin(forward);
+      if (Controller1.ButtonR1.pressing()){
+        Intake1.setVelocity(100, percent);
+        Intake2.setVelocity(100, percent);
+        Intake3.setVelocity(100, percent);
+        Intake1.spin(forward);
+        Intake2.spin(forward);
+        Intake3.spin(forward);
       }
 
-      if (Controller1.ButtonR1.pressing()){
-        Stage1Intake.setVelocity(100, percent);
-        Stage1Intake.spin(reverse);
+      if (Controller1.ButtonR2.pressing()){
+        Intake1.setVelocity(100, percent);
+        Intake2.setVelocity(100, percent);
+        Intake3.setVelocity(100, percent);
+        Intake1.spin(reverse);
+        Intake2.spin(reverse);
+        Intake3.spin(reverse);
       }
 
       if (!Controller1.ButtonR2.pressing() && !Controller1.ButtonR1.pressing()){
-        Stage1Intake.stop();
+        Intake1.stop();
+        Intake2.stop();
+        Intake3.stop();
       }
 
     // wait before repeating the process

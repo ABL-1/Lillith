@@ -6,6 +6,7 @@
 #include "AutonMain.h"
 #include "AutonFunction.h"
 #include "AutonElimination.h"
+#include "PID.h"
 
 using namespace vex;
 using signature = vision::signature;
@@ -50,9 +51,43 @@ void SkillsSelected() {                                     //selection code for
 void SkillsAuton(){
 
     if (SkillsPath == 1){  
-        
-      //Insert the code for the auton skills here
-      
+      PIDcontroll = true;
+      // Insert the code for the auton skills here
+      // Brain.Screen.print("Skills Running");
+      // wait(1, sec);
+      Drive(100);
+      Brain.Screen.newLine();
+      Brain.Screen.print("Drive 1 Ran");
+      wait(5, msec);
+      Turn(90);
+      Brain.Screen.print("done");
+      // Drive(-100);
+      // Brain.Screen.newLine();
+      // Brain.Screen.print("Drive 2 Ran");
+      // wait(10, msec);
+      // Turn(45);
+      // Brain.Screen.newLine();
+      // Brain.Screen.print("Turn 1 Ran");
+      // Turn(-45);
+      // Brain.Screen.newLine();
+      // Brain.Screen.print("Turn 2 Ran");
+      // Turn(90);
+      // Brain.Screen.newLine();
+      // Brain.Screen.print("Turn 1 Ran");
+      // Turn(-90);
+      // Brain.Screen.newLine();
+      // Brain.Screen.print("Turn 2 Ran");
+      // Turn(180);
+      // Brain.Screen.newLine();
+      // Brain.Screen.print("Turn 1 Ran");
+      // Turn(-180);
+      // Brain.Screen.newLine();
+      // Brain.Screen.print("Turn 2 Ran");
+      // Curve(100, 90);
+      // Brain.Screen.newLine();
+      // Brain.Screen.print("Curve 1 Ran");
+
+      PIDcontroll = false;      
     }
 
     if (SkillsPath == 0){

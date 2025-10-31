@@ -1,0 +1,10 @@
+extern bool PIDcontroll;
+int drivetrainPID();
+extern double DrivedesiredValue;
+extern double TurndesiredValue;
+extern double DrivemotorPower;
+extern double TurnMotorPower;
+extern int LeftMotorsPosition;
+extern int RightMotorsPosition;
+extern bool DriveComplete;
+extern bool TurnComplete;
