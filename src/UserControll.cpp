@@ -62,28 +62,71 @@ int rc_auto_loop_function_Controller1() {
         RightDriveSmart.spin(vex::forward);
       }
 
-      if (Controller1.ButtonR1.pressing()){
+      if (Controller1.ButtonR1.pressing()){  
         Intake1.setVelocity(100, percent);
         Intake2.setVelocity(100, percent);
+        Intake1.spin(forward);
+        Intake2.spin(reverse);
         Intake3.setVelocity(100, percent);
+        Intake3.spin(reverse);
+      }
+
+      if (Controller1.ButtonB.pressing()){  
+        Intake1.setVelocity(100, percent);
+        Intake2.setVelocity(100, percent);
         Intake1.spin(forward);
         Intake2.spin(forward);
+        Intake3.setVelocity(100, percent);
+        Intake3.spin(reverse);
+      }
+
+
+      if (Controller1.ButtonL2.pressing()){
+        Intake3.setVelocity(100, percent);
+        Intake3.spin(reverse);
+        Intake1.setVelocity(100, percent);
+        Intake2.setVelocity(100, percent);
+        Intake1.spin(reverse);
+        Intake2.spin(reverse);
+      }
+
+      if (Controller1.ButtonL1.pressing()){
+        Intake3.setVelocity(100, percent);
         Intake3.spin(forward);
+        Intake1.setVelocity(100, percent);
+        Intake2.setVelocity(100, percent);
+        Intake1.spin(reverse);
+        Intake2.spin(reverse);
       }
 
       if (Controller1.ButtonR2.pressing()){
         Intake1.setVelocity(100, percent);
         Intake2.setVelocity(100, percent);
-        Intake3.setVelocity(100, percent);
         Intake1.spin(reverse);
-        Intake2.spin(reverse);
-        Intake3.spin(reverse);
+        Intake2.spin(forward);
       }
 
-      if (!Controller1.ButtonR2.pressing() && !Controller1.ButtonR1.pressing()){
+
+      if (!Controller1.ButtonR2.pressing() && !Controller1.ButtonR1.pressing() && !Controller1.ButtonRight.pressing() && !Controller1.ButtonL2.pressing() && !Controller1.ButtonL1.pressing() && !Controller1.ButtonB.pressing()){
         Intake1.stop();
         Intake2.stop();
         Intake3.stop();
+      }
+
+      if(Controller1.ButtonDown.pressing()){
+        scooper.set(true);
+      }
+
+      if(Controller1.ButtonRight.pressing()){
+        scooper.set(false);
+      }
+
+      if(Controller1.ButtonA.pressing()){
+        parker.set(true);
+      }
+
+      if(Controller1.ButtonX.pressing()){
+        parker.set(false);
       }
 
     // wait before repeating the process

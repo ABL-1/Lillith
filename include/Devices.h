@@ -16,3 +16,5 @@ extern vex::motor_group Intake;
 extern vex::motor Intake1;
 extern vex::motor Intake2;
 extern vex::motor Intake3;
+extern vex::digital_out scooper;
+extern vex::digital_out parker;

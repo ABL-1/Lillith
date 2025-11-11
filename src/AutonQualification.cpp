@@ -6,6 +6,7 @@
 #include "AutonMain.h"
 #include "AutonFunction.h"
 #include "AutonElimination.h"
+#include "PID.h"
 
 using namespace vex;
 using signature = vision::signature;
@@ -110,26 +111,76 @@ void QualificationAutonLogic() {                // Different aoutonomous paths, 
     Brain.Screen.pressed(QualificationSelected);
   
   if (aoutonpath == 2){
-      //this is the code for the right side autonomous red alliance
+      //this is the code for the right side autonomous blue alliance
+      PIDcontroll = true;
+      Intake1.setVelocity(100, percent);
+      Intake2.setVelocity(100, percent);
+      Intake1.spin(reverse);
+      Intake2.spin(forward);
 
+      wait(.75, sec);
 
+      Drive(85);
+      Brain.Screen.newLine();
+        
+      PIDcontroll = false; 
+      Brain.Screen.print("Drive 2 Ran");
+      wait(5, sec);
   }
 
     if (aoutonpath == 1){
-      //this is the code for the left side autonomous blue alliance
+      //this is the code for the left side autonomous red alliance
+      PIDcontroll = true;
+      Intake1.setVelocity(100, percent);
+      Intake2.setVelocity(100, percent);
+      Intake1.spin(reverse);
+      Intake2.spin(forward);
 
+      wait(.75, sec);
+
+      Drive(85);
+      Brain.Screen.newLine();
+        
+      PIDcontroll = false; 
+      Brain.Screen.print("Drive 1 Ran");
+      wait(5, sec);
 
     }
 
   if (aoutonpath == 3){
-      //this is the code for the right side autonomous blue alliance
+      //this is the code for the right side autonomous red alliance
+      PIDcontroll = true;
+      Intake1.setVelocity(100, percent);
+      Intake2.setVelocity(100, percent);
+      Intake1.spin(reverse);
+      Intake2.spin(forward);
 
+      wait(.75, sec);
 
+      Drive(85);
+      Brain.Screen.newLine();
+        
+      PIDcontroll = false; 
+      Brain.Screen.print("Drive 3 Ran");
+      wait(5, sec);
     }
 
     if (aoutonpath == 4){
-      //this is the code for the left side autonomous red alliance
+      //this is the code for the left side autonomous blue alliance
+      PIDcontroll = true;
+      Intake1.setVelocity(100, percent);
+      Intake2.setVelocity(100, percent);
+      Intake1.spin(reverse);
+      Intake2.spin(forward);
 
+      wait(.75, sec);
+
+      Drive(85);
+      Brain.Screen.newLine();
+        
+      PIDcontroll = false; 
+      Brain.Screen.print("Drive 3 Ran");
+      wait(5, sec);
     }
 
     if (aoutonpath == 0){

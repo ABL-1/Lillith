@@ -16,7 +16,7 @@ void Drive(double driveDistance){  //driveDistance is in centimeters
 
     TurndesiredValue = 0;
 
-    double distancePerRevolution = 23.2; // this is in cm, and it is the distance that the 2.75 in omni wheels go in one rotation
+    double distancePerRevolution = 19.4; // this is in cm, and it is the distance that the 3.25 in omni wheels go in one rotation on our drivetrain setup
 
     DrivedesiredValue = (driveDistance / distancePerRevolution) * 360; //This is in degrees
 
@@ -33,13 +33,13 @@ void Drive(double driveDistance){  //driveDistance is in centimeters
     RightDriveSmart.resetPosition();
     wait(1, msec);
 
-    double CirclePercent = (TurnValue);
+    double CirclePercent = (TurnValue); //the 360 degrees cancel out
 
     DrivedesiredValue = 0;
 
-    double driveDistance = (CirclePercent * 82.5); //drive circumfrence
+    double driveDistance = (CirclePercent * 94); //drive circumfrence
 
-    double rotations = (driveDistance / 21.94402469); // this is in cm, and it is the distance that the 2.75 in omni wheels go in one rotation
+    double rotations = (driveDistance / 19.4); // this is in cm, and it is the distance that the 3.25 in omni wheels go in one rotation
 
     TurndesiredValue = rotations;
     

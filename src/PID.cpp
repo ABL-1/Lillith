@@ -14,13 +14,17 @@ using code = vision::code;
 
 bool PIDcontroll;                    // This is numberical optimization!!!!!!!!!
 
-double DrivekP = 0.005;      //Tune this one first
+double DrivekP = 0.006;      //Tune this one first
 double DrivekI = 0;       //leave at zero for drivetrain
-double DrivekD = 0.03;
+double DrivekD = 0.003;
 
-double TurnkP = 0.003;      //Tune this one first
+double TurnAdjustkP = 0.08;      //Tune this one first
+double TurnAdjustkI = 0;       //leave at zero for drivetrain
+double TurnAdjustkD = 0.0;
+                                  //                                 Seperate turn and correction PID so I can tune them seperately
+double TurnkP = 0.001;      //Tune this one first
 double TurnkI = 0.005;       //leave at zero for drivetrain
-double TurnkD = 0.005;
+double TurnkD = 0.00005;
 
 
 float DriveError;
@@ -33,25 +37,26 @@ float TurnPrevError = 0;
 float TurnDerivitive;
 float TurnTotalError;
 
+float TurnAdjustError;
+float TurnPrevAdjustError = 0;
+float TurnAdjustDerivitive;
+float TurnTotalAdjustError;
+
 double DrivedesiredValue;
 double TurndesiredValue;
 
 double DrivemotorPower;
 double TurnMotorPower;
+double TurnAdjustMotorPower;
 
 int PIDMax = 12;
-float TurnPIDMin = 0.5;
-float DrivePIDMin = 1.5;
+float TurnPIDMin = 0;
+float DrivePIDMin = 1.3;
 
+double TurnCorrection = 0;
 
 bool DriveComplete = false;
 bool TurnComplete = false;
-
-double RightDriveCorrection;
-double LeftDriveCorrection;
-
-double RightTurnCorrection;
-double LeftTurnCorrection;
 
 
 int drivetrainPID(){
@@ -66,38 +71,6 @@ int drivetrainPID(){
         float LeftMotorsPosition = ((leftbackmotor.position(degrees) + leftmiddlemotor.position(degrees) + leftfrontmotor.position(degrees)) / 3);
         float RightMotorsPosition = ((rightbackmotor.position(degrees) + rigtmiddlemotor.position(degrees) + rightfrontmotor.position(degrees)) / 3);
 
-        /////////////////////////////////////////////////////////////
-        //Drive Correction
-        //////////////////////////////////////////////////////////////
-
-        if(std::abs(DrivedesiredValue) >= 0 && TurndesiredValue == 0){ 
-            if(std::abs(LeftMotorsPosition) > std::abs(RightMotorsPosition)){
-                RightDriveCorrection = (std::abs(LeftMotorsPosition) - std::abs(RightMotorsPosition)) * DrivekP * DriveError * 0.005; //Controlls the severity with which it corrects
-            }
-            else{RightDriveCorrection = 0;}
-
-            if(std::abs(RightMotorsPosition) > std::abs(LeftMotorsPosition)){
-                LeftDriveCorrection = (std::abs(RightMotorsPosition) - std::abs(LeftMotorsPosition)) * DrivekP * DriveError * 0.005; //Controlls the severity with which it corrects
-            }
-            else{LeftDriveCorrection = 0;}
-        }
-
-
-        /////////////////////////////////////////////////////////////
-        //Turn Correction
-        //////////////////////////////////////////////////////////////
-
-        if(DrivedesiredValue == 0 && std::abs(TurndesiredValue) >= 0){ 
-            if(std::abs(LeftMotorsPosition) > std::abs(RightMotorsPosition)){
-                RightTurnCorrection = (std::abs(LeftMotorsPosition) - std::abs(RightMotorsPosition)) * DrivekP * DriveError * 5; //Controlls the severity with which it corrects
-            }
-            else{RightDriveCorrection = 0;}
-
-            if(std::abs(RightMotorsPosition) > std::abs(LeftMotorsPosition)){
-                LeftTurnCorrection = (std::abs(RightMotorsPosition) - std::abs(LeftMotorsPosition)) * DrivekP * DriveError * 5; //Controlls the severity with which it corrects
-            }
-            else{LeftDriveCorrection = 0;}
-        }
 
         /////////////////////////////////////////////////////////////////////////////
         //Driving PID
@@ -114,7 +87,24 @@ int drivetrainPID(){
         DrivetotalError += DriveError;
 
         //sets speed of the drivetrain
-        if(std::abs(DrivedesiredValue) > 0){DrivemotorPower = (DriveError * DrivekP + DrivetotalError * DrivekI + Drivederivitive * DrivekD);} else {DrivemotorPower = 0;}
+        DrivemotorPower = (DriveError * DrivekP + DrivetotalError * DrivekI + Drivederivitive * DrivekD);
+
+        ////////////////////////////////////////////////////////////////////////////
+        //Drive Adjustment PID
+        ///////////////////////////////////////////////////////////////
+
+        double turnAdjustDifference = LeftMotorsPosition - RightMotorsPosition;
+      
+        TurnAdjustError = 0 - turnAdjustDifference;  //this is correct
+
+        //takes the derivitive
+        TurnAdjustDerivitive = TurnAdjustError - TurnPrevAdjustError;
+
+        //takes the integral
+        TurnTotalAdjustError += TurnAdjustError;
+
+        //sets speed of the drivetrain
+        TurnAdjustMotorPower = TurnError * TurnAdjustkP + TurnTotalError * TurnAdjustkI + TurnDerivitive * TurnAdjustkD;
 
         ////////////////////////////////////////////////////////////////////////////
         //Turning PID
@@ -131,7 +121,17 @@ int drivetrainPID(){
         TurnTotalError += TurnError;
 
         //sets speed of the drivetrain
-        if(std::abs(TurndesiredValue) > 0){TurnMotorPower = TurnError * TurnkP + TurnTotalError * TurnkI + TurnDerivitive * TurnkD;} else{TurnMotorPower = 0;};
+        TurnMotorPower = TurnError * TurnkP + TurnTotalError * TurnkI + TurnDerivitive * TurnkD;
+
+        ////////////////////////////////////////////////////////////////////////////
+        //Turning Correction
+        ///////////////////////////////////////////////////////////////
+
+        if(std::abs(TurndesiredValue) > 0){
+            
+            TurnCorrection = (std::abs(LeftMotorsPosition) - std::abs(RightMotorsPosition)) * 1; //modifier to tune the severity of correction
+
+        }
 
         ////////////////////////////////////////////////////////
         //Defining the min and max
@@ -156,22 +156,29 @@ int drivetrainPID(){
         //Drivetrain Controll
         ////////////////////////////////////////////////////////////////
 
-        RightDriveSmart.spin(forward, DrivemotorPower + RightDriveCorrection + RightTurnCorrection - TurnMotorPower, voltageUnits::volt); 
-        LeftDriveSmart.spin(forward, DrivemotorPower + LeftDriveCorrection + LeftTurnCorrection + TurnMotorPower, voltageUnits::volt); 
+        double TurnVariable; 
+        if(TurndesiredValue > 0){TurnVariable = TurnMotorPower;} else{TurnVariable = TurnAdjustMotorPower;}
+
+        RightDriveSmart.spin(forward, DrivemotorPower - TurnVariable - TurnCorrection, voltageUnits::volt); 
+        LeftDriveSmart.spin(forward, DrivemotorPower + TurnVariable + TurnCorrection, voltageUnits::volt); 
 
 
         DriveprevError = DriveError;
         TurnPrevError = TurnError;
+        TurnPrevAdjustError = TurnAdjustError;
 
-        vex::task::sleep(10);
+        
 
         if (std::abs(averagePosition) >= std::abs(DrivedesiredValue)){DriveComplete = true;} else{DriveComplete = false;}
         if (std::abs(turnDifference) >= std::abs(TurndesiredValue)){TurnComplete = true;} else{TurnComplete = false;}
 
+
+        vex::task::sleep(5);
+
         if (std::abs(DrivedesiredValue) > 0 && DriveComplete == true && TurndesiredValue == 0){LeftDriveSmart.stop(); RightDriveSmart.stop();}
         if (DrivedesiredValue == 0 && TurnComplete == true && std::abs(TurndesiredValue) > 0){LeftDriveSmart.stop(); RightDriveSmart.stop();}
 
-        vex::task::sleep(10);
+        vex::task::sleep(7);
     }
 
     return 1;

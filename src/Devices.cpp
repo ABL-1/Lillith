@@ -24,4 +24,5 @@ motor Intake3 = motor(PORT18, ratio18_1, false);
 
 controller Controller1 = controller(primary);
 
-
+digital_out scooper = digital_out(digital_out(Brain.ThreeWirePort.G));
+digital_out parker = digital_out(digital_out(Brain.ThreeWirePort.H));
