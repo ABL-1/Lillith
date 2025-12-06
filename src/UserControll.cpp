@@ -62,26 +62,17 @@ int rc_auto_loop_function_Controller1() {
         RightDriveSmart.spin(vex::forward);
       }
 
-      if (Controller1.ButtonR1.pressing()){  
+      if (Controller1.ButtonR1.pressing()){ // Scores the blocks on the low goals
         Intake1.setVelocity(100, percent);
         Intake2.setVelocity(100, percent);
         Intake1.spin(forward);
         Intake2.spin(reverse);
         Intake3.setVelocity(100, percent);
-        Intake3.spin(reverse);
-      }
-
-      if (Controller1.ButtonB.pressing()){  
-        Intake1.setVelocity(100, percent);
-        Intake2.setVelocity(100, percent);
-        Intake1.spin(forward);
-        Intake2.spin(forward);
-        Intake3.setVelocity(100, percent);
-        Intake3.spin(reverse);
+        Intake3.spin(forward);
       }
 
 
-      if (Controller1.ButtonL2.pressing()){
+      if (Controller1.ButtonL2.pressing()){ // Scores the blocks on the medium goals
         Intake3.setVelocity(100, percent);
         Intake3.spin(reverse);
         Intake1.setVelocity(100, percent);
@@ -90,7 +81,7 @@ int rc_auto_loop_function_Controller1() {
         Intake2.spin(reverse);
       }
 
-      if (Controller1.ButtonL1.pressing()){
+      if (Controller1.ButtonL1.pressing()){ // Scores the blocks on the high goals
         Intake3.setVelocity(100, percent);
         Intake3.spin(forward);
         Intake1.setVelocity(100, percent);
@@ -99,7 +90,7 @@ int rc_auto_loop_function_Controller1() {
         Intake2.spin(reverse);
       }
 
-      if (Controller1.ButtonR2.pressing()){
+      if (Controller1.ButtonR2.pressing()){ // Store the blocks
         Intake1.setVelocity(100, percent);
         Intake2.setVelocity(100, percent);
         Intake1.spin(reverse);
@@ -113,20 +104,28 @@ int rc_auto_loop_function_Controller1() {
         Intake3.stop();
       }
 
-      if(Controller1.ButtonDown.pressing()){
+      if(Controller1.ButtonDown.pressing()){ // Lowers the loader reloader
         scooper.set(true);
       }
 
-      if(Controller1.ButtonRight.pressing()){
+      if(Controller1.ButtonRight.pressing()){ // Raises the Loader reloader
         scooper.set(false);
       }
 
-      if(Controller1.ButtonA.pressing()){
+      if(Controller1.ButtonA.pressing()){ // Extend the parking mech
         parker.set(true);
       }
 
-      if(Controller1.ButtonX.pressing()){
+      if(Controller1.ButtonX.pressing()){ // Retract the parking mech
         parker.set(false);
+      }
+
+      if(Controller1.ButtonB.pressing()){
+        pummeler.set(true); 
+      }
+
+      if(!Controller1.ButtonB.pressing()){
+        pummeler.set(false);
       }
 
     // wait before repeating the process

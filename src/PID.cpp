@@ -14,17 +14,17 @@ using code = vision::code;
 
 bool PIDcontroll;                    // This is numberical optimization!!!!!!!!!
 
-double DrivekP = 0.006;      //Tune this one first
+double DrivekP = 0.009;      //Tune this one first
 double DrivekI = 0;       //leave at zero for drivetrain
 double DrivekD = 0.003;
 
-double TurnAdjustkP = 0.08;      //Tune this one first
+double TurnAdjustkP = 0.099;      //Tune this one first
 double TurnAdjustkI = 0;       //leave at zero for drivetrain
 double TurnAdjustkD = 0.0;
                                   //                                 Seperate turn and correction PID so I can tune them seperately
-double TurnkP = 0.001;      //Tune this one first
-double TurnkI = 0.005;       //leave at zero for drivetrain
-double TurnkD = 0.00005;
+double TurnkP = 0.023;      //Tune this one first
+double TurnkI = 0.0;       //leave at zero for drivetrain
+double TurnkD = 0.0015;
 
 
 float DriveError;
@@ -51,9 +51,10 @@ double TurnAdjustMotorPower;
 
 int PIDMax = 12;
 float TurnPIDMin = 0;
-float DrivePIDMin = 1.3;
+float DrivePIDMin = 1.5;
 
-double TurnCorrection = 0;
+double RightTurnCorrection = 0;
+double LeftTurnCorrection = 0;
 
 bool DriveComplete = false;
 bool TurnComplete = false;
@@ -76,7 +77,7 @@ int drivetrainPID(){
         //Driving PID
         //////////////////////////////////////////////////////////////
 
-        double averagePosition = (LeftMotorsPosition + RightMotorsPosition) / 2;
+        double averagePosition = (LeftMotorsPosition + RightMotorsPosition) /  2;
 
         DriveError = DrivedesiredValue - averagePosition;  //this is correct
 
@@ -110,8 +111,8 @@ int drivetrainPID(){
         //Turning PID
         ///////////////////////////////////////////////////////////////
 
-        double turnDifference = LeftMotorsPosition - RightMotorsPosition;
-      
+        double turnDifference = (LeftMotorsPosition - RightMotorsPosition) / 2;
+
         TurnError = TurndesiredValue - turnDifference;  //this is correct
 
         //takes the derivitive
@@ -127,9 +128,16 @@ int drivetrainPID(){
         //Turning Correction
         ///////////////////////////////////////////////////////////////
 
-        if(std::abs(TurndesiredValue) > 0){
+
+        if(std::abs(TurndesiredValue) > 0 && DrivedesiredValue == 0){
             
-            TurnCorrection = (std::abs(LeftMotorsPosition) - std::abs(RightMotorsPosition)) * 1; //modifier to tune the severity of correction
+            if(std::abs(LeftMotorsPosition) > std::abs(RightMotorsPosition)){
+                RightTurnCorrection = (std::abs(LeftMotorsPosition) - std::abs(RightMotorsPosition)) * 0.00; //modifier to tune the severity of correction
+            }
+
+            if(std::abs(LeftMotorsPosition) < std::abs(RightMotorsPosition)){
+                LeftTurnCorrection = (std::abs(RightMotorsPosition) - std::abs(LeftMotorsPosition)) * 0.00; //modifier to tune the severity of correction
+            }
 
         }
 
@@ -159,8 +167,8 @@ int drivetrainPID(){
         double TurnVariable; 
         if(TurndesiredValue > 0){TurnVariable = TurnMotorPower;} else{TurnVariable = TurnAdjustMotorPower;}
 
-        RightDriveSmart.spin(forward, DrivemotorPower - TurnVariable - TurnCorrection, voltageUnits::volt); 
-        LeftDriveSmart.spin(forward, DrivemotorPower + TurnVariable + TurnCorrection, voltageUnits::volt); 
+        RightDriveSmart.spin(forward, DrivemotorPower - TurnVariable - RightTurnCorrection, voltageUnits::volt); 
+        LeftDriveSmart.spin(forward, DrivemotorPower + TurnVariable + LeftTurnCorrection, voltageUnits::volt); 
 
 
         DriveprevError = DriveError;
@@ -173,10 +181,13 @@ int drivetrainPID(){
         if (std::abs(turnDifference) >= std::abs(TurndesiredValue)){TurnComplete = true;} else{TurnComplete = false;}
 
 
-        vex::task::sleep(5);
+        vex::task::sleep(10);
 
         if (std::abs(DrivedesiredValue) > 0 && DriveComplete == true && TurndesiredValue == 0){LeftDriveSmart.stop(); RightDriveSmart.stop();}
         if (DrivedesiredValue == 0 && TurnComplete == true && std::abs(TurndesiredValue) > 0){LeftDriveSmart.stop(); RightDriveSmart.stop();}
+
+        DriveComplete = false;
+        TurnComplete = false;
 
         vex::task::sleep(7);
     }

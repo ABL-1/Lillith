@@ -53,11 +53,10 @@ void SkillsAuton(){
     if (SkillsPath == 1){  
       PIDcontroll = true;
       // Insert the code for the auton skills here
-      // Brain.Screen.print("Skills Running");
-      // wait(1, sec);
+      
+      
       wait(1,sec);
-      Turn(180);
-      wait(3, sec);
+      parker.set(true);
       Brain.Screen.newLine();
       Brain.Screen.print("Drive 1 Ran");
       wait(5, msec);

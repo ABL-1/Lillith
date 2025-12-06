@@ -18,7 +18,6 @@ bool singleQualification = true;
 
 int aoutonpath = 0;
 
-bool wallStake = true;
 
 void setauton(int val){   //shows what was selected for autonomous
   aoutonpath = val;
@@ -110,78 +109,56 @@ void QualificationSelected() {                                     //selection c
 void QualificationAutonLogic() {                // Different aoutonomous paths, this is where the actual auton code goes.
     Brain.Screen.pressed(QualificationSelected);
   
-  if (aoutonpath == 2){
-      //this is the code for the right side autonomous blue alliance
+  if (aoutonpath == 2 || aoutonpath == 3){
+      //this is the code for the right side autonomous blue alliance and right side auton red alliance
       PIDcontroll = true;
-      Intake1.setVelocity(100, percent);
-      Intake2.setVelocity(100, percent);
-      Intake1.spin(reverse);
-      Intake2.spin(forward);
-
+      
+      Devour();
       wait(.75, sec);
 
-      Drive(85);
-      Brain.Screen.newLine();
+      Drive(50);
+      wait(1.75, sec);
+      Turn(35);
+      wait(2.15, sec);
+      Drive(27);
+      wait(2, sec);
+      Turn(-70);
+      wait(1.5, sec);
+      Drive(15);
+      wait(1, sec);
+      ScoreBottom();
         
       PIDcontroll = false; 
-      Brain.Screen.print("Drive 2 Ran");
+      Brain.Screen.print("Right Auton Ran");
       wait(5, sec);
   }
 
-    if (aoutonpath == 1){
-      //this is the code for the left side autonomous red alliance
+    if (aoutonpath == 1 || aoutonpath == 4){
+      //this is the code for the left side autonomous blue alliance and lest side auton blue alliance 
       PIDcontroll = true;
-      Intake1.setVelocity(100, percent);
-      Intake2.setVelocity(100, percent);
-      Intake1.spin(reverse);
-      Intake2.spin(forward);
-
+      
+      Devour();
       wait(.75, sec);
 
-      Drive(85);
-      Brain.Screen.newLine();
-        
+      Drive(50);
+      wait(1.75, sec);
+      Turn(-35);
+      wait(1.5, sec);
+      Drive(27);
+      wait(2, sec);
+      Turn(90);
+      wait(1.5, sec);
+      Drive(22);
+      wait(1, sec);
+      ScoreMiddle();
+      
       PIDcontroll = false; 
-      Brain.Screen.print("Drive 1 Ran");
+      Brain.Screen.newLine();
+      Brain.Screen.print("Left Auton Ran");
       wait(5, sec);
 
     }
 
-  if (aoutonpath == 3){
-      //this is the code for the right side autonomous red alliance
-      PIDcontroll = true;
-      Intake1.setVelocity(100, percent);
-      Intake2.setVelocity(100, percent);
-      Intake1.spin(reverse);
-      Intake2.spin(forward);
-
-      wait(.75, sec);
-
-      Drive(85);
-      Brain.Screen.newLine();
-        
-      PIDcontroll = false; 
-      Brain.Screen.print("Drive 3 Ran");
-      wait(5, sec);
-    }
-
-    if (aoutonpath == 4){
-      //this is the code for the left side autonomous blue alliance
-      PIDcontroll = true;
-      Intake1.setVelocity(100, percent);
-      Intake2.setVelocity(100, percent);
-      Intake1.spin(reverse);
-      Intake2.spin(forward);
-
-      wait(.75, sec);
-
-      Drive(85);
-      Brain.Screen.newLine();
-        
-      PIDcontroll = false; 
-      Brain.Screen.print("Drive 3 Ran");
-      wait(5, sec);
-    }
 
     if (aoutonpath == 0){
       return;

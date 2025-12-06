@@ -18,8 +18,6 @@ bool singleElimination = true;
 
 int EliminationPath = 0;
 
-bool EWallStake = true;
-
 void EliminationAuton(int val){   //shows what was selected for autonomous
   EliminationPath = val;
 

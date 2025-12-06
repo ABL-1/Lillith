@@ -1,4 +1,5 @@
 #include "vex.h"
+#include "lemlib.api.hpp"
 
 using namespace vex;
 using signature = vision::signature;
@@ -18,6 +19,8 @@ inertial inertialsensor = inertial(PORT12);
 motor_group LeftDriveSmart = motor_group(leftfrontmotor, leftmiddlemotor, leftbackmotor);
 motor_group RightDriveSmart = motor_group(rightfrontmotor, rigtmiddlemotor, rightbackmotor);
 
+lemlib::Omniwheel::NEW_325;
+
 motor Intake1 = motor(PORT20, ratio6_1, true);
 motor Intake2 = motor(PORT19, ratio18_1, false);
 motor Intake3 = motor(PORT18, ratio18_1, false);
@@ -26,3 +29,4 @@ controller Controller1 = controller(primary);
 
 digital_out scooper = digital_out(digital_out(Brain.ThreeWirePort.G));
 digital_out parker = digital_out(digital_out(Brain.ThreeWirePort.H));
+digital_out pummeler = digital_out(digital_out(Brain.ThreeWirePort.F));
